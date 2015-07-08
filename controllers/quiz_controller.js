@@ -41,13 +41,22 @@ exports.load = function(req,res,next,quizId){
 			next(new Error('No existe quizId='+quizId));
 		}
 	}).catch(function(error) { next(error);});
-}
+};
+
 
 //GET /quizes
 exports.index = function(req,res){
-	models.Quiz.findAll().then(function(quizes){
-	  res.render('quizes/index',{quizes: quizes});	
-	})
+	var busqueda= null;
+	if (req.query.search){
+		busqueda = ('%'+req.query.search+'%').replace(/ /g,'%');
+		models.Quiz.findAll({where:["pregunta like ?",busqueda],order:'pregunta ASC'}).then(function(quizes){
+	      res.render('quizes/index',{quizes: quizes});	
+	    })
+	} else {
+		models.Quiz.findAll().then(function(quizes){
+	  		res.render('quizes/index',{quizes: quizes});	
+		})
+	}
 	
 };
 
