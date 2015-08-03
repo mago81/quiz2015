@@ -14,6 +14,7 @@ router.get('/', function(req, res) {
 //router.get('/quizes/answer',quizController.answer);
 
 router.param('quizId',quizController.load);
+router.param('commentId',commentController.load);
 
 //definición de rutas de sesión
 router.get('/login',    sessionController.new);
@@ -31,6 +32,7 @@ router.delete('/quizes/:quizId(\\d+)',		sessionController.loginRequired, quizCon
 
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments',    commentController.create);
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionController.loginRequired, commentController.publish);
 
 router.get('/author', function(req,res){
 	res.render('author',{errors:[]});
