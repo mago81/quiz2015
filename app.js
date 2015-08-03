@@ -44,6 +44,19 @@ app.use(function(req,res,next){
     next();
 });
 
+app.use(function(req,res,next){
+    //Controlar la caducidad de la sesión:
+    var diferencia = Date.now() - req.session.lastAccess;
+    req.session.lastAccess = Date.now(); //guardar hora de ejecución
+
+    if((diferencia>5000)&&(req.session.user)) {
+        res.redirect('/logout');
+        console.log('Sesión caducada');
+    }
+    next();
+
+});
+
 app.use('/', routes);
 
 // catch 404 and forward to error handler
