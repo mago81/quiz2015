@@ -32,3 +32,12 @@ exports.destroy = function(req,res){
 	delete req.session.user;
 	res.redirect(req.session.redir.toString());
 };
+
+//MW de autorización de accesos HTTP restringidos:
+exports.loginRequired = function(req,res,next) {
+	if (req.session.user) {
+		next();
+	} else {
+		res.render('sessions/new', {errors:[]});
+	}
+};

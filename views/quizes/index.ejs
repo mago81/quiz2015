@@ -4,6 +4,7 @@
 		<tr>
 			<td><label for="tem" class="rem"><%= quizes[i].tema %>:</a></td>
 			<td><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td><td></td>
+			<%if(session.user){%>
 			<td><a href="quizes/<%= quizes[i].id %>/edit"><button>editar</button></td>
 			<td>
 				<form method="post" action="quizes/<%= quizes[i].id %>?_method=delete">
@@ -12,12 +13,15 @@
 					</button>
 				</form>
 			</td>
+			<% } %>
 		</tr>
 	<% } %>
+<%if(session.user){%>
 <tr><td></td><td>
 <a href="/quizes/new"><button type="button">Crear pregunta</button></a>
 </td></tr>
-<tr><td></td>
+<% } %>
+<tr><%if(session.user){%><td></td><% } %>
 <form method="get" action="/quizes">
 	<td><label for="Busc" class="rem">Buscar:</label></td>
 	<td><input type="test" name="search" value=""/></td>
