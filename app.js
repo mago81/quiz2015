@@ -49,7 +49,7 @@ app.use(function(req,res,next){
     var diferencia = Date.now() - req.session.lastAccess;
     req.session.lastAccess = Date.now(); //guardar hora de ejecución
 
-    if((diferencia>5000)&&(req.session.user)) {
+    if((diferencia>120000)&&(req.session.user)) {
         res.redirect('/logout');
         console.log('Sesión caducada');
     }
